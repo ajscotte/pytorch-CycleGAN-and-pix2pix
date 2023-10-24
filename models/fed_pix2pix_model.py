@@ -57,11 +57,10 @@ class FedPix2PixModel(BaseModel):
             self.model_names = ['G']
             
         #defining virtual workers
-        # hook = sy.TorchHook(torch) 
-        # self.worker1 = sy.VirtualWorker(hook, id="intel")
+        hook = sy.TorchHook(torch) 
+        self.worker1 = sy.VirtualWorker(hook, id="intel")
         
-        self.worker1  = sy.RemoteWorker("intel", "127.0.0.1", random.randint(10000, 20000)
-)
+        # self.worker1  = sy.RemoteWorker("intel", "127.0.0.1", random.randint(10000, 20000))
         
         # define networks (both generator and discriminator)
         
