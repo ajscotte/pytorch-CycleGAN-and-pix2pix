@@ -56,7 +56,7 @@ class FedPix2PixModel(BaseModel):
             self.model_names = ['G']
             
         #defining virtual workers
-        hook = sy.TorchHook(torch)
+        hook = sy.TorchHook(torch) 
         self.worker1 = sy.VirtualWorker(hook, id="intel")
         
         # define networks (both generator and discriminator)
