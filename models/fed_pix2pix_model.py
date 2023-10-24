@@ -56,7 +56,7 @@ class FedPix2PixModel(BaseModel):
             self.model_names = ['G']
             
         #defining virtual workers
-        hook = syft.frameworks.torch.hook
+        hook = sy.frameworks.torch.hook
         hook(torch) 
         self.worker1 = sy.VirtualWorker(hook, id="intel")
         
