@@ -57,10 +57,10 @@ class FedPix2PixModel(BaseModel):
             self.model_names = ['G']
             
         #defining virtual workers
-        # hook = sy.TorchHook(torch) 
-        # self.worker1 = sy.VirtualWorker(hook, id="intel")
-        domain = sy.Domain(name="my_domain")
-        domain.add_worker(name="worker_1", address="127.0.0.1:10000")
+        hook = sy.TorchHook(torch) 
+        self.worker1 = sy.VirtualWorker(hook, id="intel")
+        # domain = sy.Domain(name="my_domain")
+        # domain.add_worker(name="worker_1", address="127.0.0.1:10000")
 
         
         # self.worker1  = sy.RemoteWorker("intel", "127.0.0.1", random.randint(10000, 20000))
