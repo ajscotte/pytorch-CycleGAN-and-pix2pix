@@ -170,3 +170,5 @@ class FedPix2PixModel(BaseModel):
         self.optimizer_G.zero_grad()        # set G's gradients to zero
         self.backward_G(fake_B, self.netD)                   # calculate graidents for G
         self.optimizer_G.step()             # update G's weights
+        
+        

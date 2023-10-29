@@ -126,3 +126,6 @@ class Pix2PixModel(BaseModel):
         self.optimizer_G.zero_grad()        # set G's gradients to zero
         self.backward_G()                   # calculate graidents for G
         self.optimizer_G.step()             # update G's weights
+        
+    def load_model():
+        return Pix2PixModel().to(DEVICE)
