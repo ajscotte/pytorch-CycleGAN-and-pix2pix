@@ -23,7 +23,6 @@ from options.train_options import TrainOptions
 from data import create_dataset
 from models import create_model
 from util.visualizer import Visualizer
-import syft as sy
 
 if __name__ == '__main__':
     
