@@ -25,6 +25,7 @@ opt_test = TestOptions().parse()
 test_data = create_dataset(opt_test)
 
 net = create_model(opt_train)
+print("model created")
 
 # Define Flower client
 class FlowerClient(fl.client.NumPyClient):
