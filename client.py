@@ -8,6 +8,7 @@ from test_fed import test
 from options.train_options import TrainOptions
 from options.test_options import TestOptions
 from data import create_dataset
+from models import create_model
 
 
 
@@ -20,9 +21,10 @@ from data import create_dataset
 net = model()
 opt_train = TrainOptions().parse()
 train_data = create_dataset(opt_train)
-
 opt_test = TestOptions().parse()
 test_data = create_dataset(opt_test)
+
+net = create_model(opt_train)
 
 # Define Flower client
 class FlowerClient(fl.client.NumPyClient):
