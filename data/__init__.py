@@ -12,7 +12,7 @@ See our template dataset class 'template_dataset.py' for more details.
 """
 import importlib
 import torch.utils.data
-import syft as sy
+
 
 from data.base_dataset import BaseDataset
 
