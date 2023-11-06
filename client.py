@@ -2,7 +2,7 @@ import flwr as fl
 import torch
 
 from collections import OrderedDict
-import models.flowerfed_pix2pix_model as net
+import models.flowerfed_pix2pix_model as model
 from train_fed import train 
 from test_fed import test
 from options.train_options import TrainOptions
@@ -12,12 +12,12 @@ from data import create_dataset
 
 
 #maybe get rid of this DEVICE
-DEVICE = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
-net.to(DEVICE)
+# DEVICE = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
+# net
 
 #todo: move parse over here so only need in one file
 # trainloader, testloader = load_data()
-
+net = model()
 opt_train = TrainOptions().parse()
 train_data = create_dataset(opt_train)
 
