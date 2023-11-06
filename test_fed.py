@@ -83,4 +83,4 @@ def test(model, dataset, opt):
     webpage.save()  # save the HTML
     
     
-    return loss, accuracy
+    return 0, 0

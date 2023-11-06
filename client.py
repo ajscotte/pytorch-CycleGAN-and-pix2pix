@@ -26,6 +26,7 @@ test_data = create_dataset(opt_test)
 
 # Define Flower client
 class FlowerClient(fl.client.NumPyClient):
+  #probably have to add bot D and G parameters
   def get_parameters(self, config):
     return [val.cpu().numpy() for _, val in net.state_dict().items()]
 
@@ -42,7 +43,7 @@ class FlowerClient(fl.client.NumPyClient):
 
   def evaluate(self, parameters, config):
     self.set_parameters(parameters)
-    loss, accuracy = test(net, test_data)
+    loss, accuracy = test(net, test_data, opt_test)
     # return float(loss), len(testloader.dataset), {"accuracy": float(accuracy)}
     return float(loss), len(test_data), {"accuracy": float(accuracy)}
 
