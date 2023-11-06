@@ -1,11 +1,28 @@
 import flwr as fl 
 import torch
 
+from collections import OrderedDict
 import models.flowerfed_pix2pix_model as net
+from train_fed import train 
+from test_fed import test
+from options.train_options import TrainOptions
+from options.test_options import TestOptions
+from data import create_dataset
 
 
-net = Net().to(DEVICE)
-trainloader, testloader = load_data()
+
+#maybe get rid of this DEVICE
+DEVICE = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
+net.to(DEVICE)
+
+#todo: move parse over here so only need in one file
+# trainloader, testloader = load_data()
+
+opt_train = TrainOptions().parse()
+train_data = create_dataset(opt_train)
+
+opt_test = TestOptions().parse()
+test_data = create_dataset(opt_test)
 
 # Define Flower client
 class FlowerClient(fl.client.NumPyClient):
@@ -19,13 +36,15 @@ class FlowerClient(fl.client.NumPyClient):
 
   def fit(self, parameters, config):
     self.set_parameters(parameters)
-    train(net, trainloader, epochs=1)
-    return self.get_parameters(config={}), len(trainloader.dataset), {}
+    train(net, train_data, opt_train)
+    # return self.get_parameters(config={}), len(trainloader.dataset), {}
+    return self.get_parameters(config={}), len(train_data), {}
 
   def evaluate(self, parameters, config):
     self.set_parameters(parameters)
-    loss, accuracy = test(net, testloader)
-    return float(loss), len(testloader.dataset), {"accuracy": float(accuracy)}
+    loss, accuracy = test(net, test_data)
+    # return float(loss), len(testloader.dataset), {"accuracy": float(accuracy)}
+    return float(loss), len(test_data), {"accuracy": float(accuracy)}
 
 # Start Flower client
 fl.client.start_numpy_client(server_address="127.0.0.1:8080", client=FlowerClient())

@@ -3,7 +3,7 @@ from .base_model import BaseModel
 from . import networks
 import flwr
 
-DEVICE = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
+# DEVICE = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
 
 class Pix2PixModel(BaseModel):
     """ This class implements the pix2pix model, for learning a mapping from input images to output images given paired data.
@@ -130,3 +130,4 @@ class Pix2PixModel(BaseModel):
         
     def load_model():
         return Pix2PixModel().to(DEVICE)
+    
