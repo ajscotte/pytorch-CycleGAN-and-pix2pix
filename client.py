@@ -18,7 +18,7 @@ from models import create_model
 
 #todo: move parse over here so only need in one file
 # trainloader, testloader = load_data()
-net = model()
+# net = model()
 opt_train = TrainOptions().parse()
 train_data = create_dataset(opt_train)
 opt_test = TestOptions().parse()
