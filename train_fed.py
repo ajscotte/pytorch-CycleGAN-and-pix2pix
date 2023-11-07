@@ -71,6 +71,7 @@ def train(model, dataset, opt):
         print("dataset loop")
         print(dataset)
         for i, data in enumerate(dataset):  # inner loop within one epoch
+            print("start loop")
             iter_start_time = time.time()  # timer for computation per iteration
             print("freq")
             if total_iters % opt.print_freq == 0:
