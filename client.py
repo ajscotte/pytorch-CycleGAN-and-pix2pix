@@ -35,7 +35,7 @@ net.setup(opt_train)
 # train_data.to('cuda')
 
 for i, data in enumerate(train_data):  # inner loop within one epoch
-  data.to('cuda')
+  data
 
 # Define Flower client
 class FlowerClient(fl.client.NumPyClient):
