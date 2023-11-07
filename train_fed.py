@@ -21,7 +21,7 @@ See frequently asked questions at: https://github.com/junyanz/pytorch-CycleGAN-a
 import time
 # from options.train_options import TrainOptions
 # from data import create_dataset
-from models import create_model
+# from models import create_model
 from util.visualizer import Visualizer
 
     
@@ -44,29 +44,41 @@ def train(model, dataset, opt):
     
     #todo: change this so always points to fed model
     # model = create_model(opt)      # create a model given opt.model and other options
+    print("setup")
     model.setup(opt)               # regular setup: load and print networks; create schedulers
     
     
     
     #todo: maybe have to do something about this
+    print("start vis")
     visualizer = Visualizer(opt)   # create a visualizer that display/save images and plots
     total_iters = 0                # the total number of training iterations
 
     
     #add and outer loop for the k-folds
+    print("start epoch")
     for epoch in range(opt.epoch_count, opt.n_epochs + opt.n_epochs_decay + 1):    # outer loop for different epochs; we save the model by <epoch_count>, <epoch_count>+<save_latest_freq>
+        print("time 1")
         epoch_start_time = time.time()  # timer for entire epoch
         iter_data_time = time.time()    # timer for data loading per iteration
+       
+        print("vis reset")
         epoch_iter = 0                  # the number of training iterations in current epoch, reset to 0 every epoch
-        visualizer.reset()              # reset the visualizer: make sure it saves the results to HTML at least once every epoch
+        visualizer.reset()    # reset the visualizer: make sure it saves the results to HTML at least once every epoch
+        
+        print("update learn")
         model.update_learning_rate()    # update learning rates in the beginning of every epoch.
+        print("dataset loop")
         for i, data in enumerate(dataset):  # inner loop within one epoch
             iter_start_time = time.time()  # timer for computation per iteration
+            print("freq")
             if total_iters % opt.print_freq == 0:
                 t_data = iter_start_time - iter_data_time
 
             total_iters += opt.batch_size
             epoch_iter += opt.batch_size
+            
+            print("model updates")
             model.set_input(data)         # unpack data from dataset and apply preprocessing
             model.optimize_parameters()   # calculate loss functions, get gradients, update network weights !!also updates!!
 
