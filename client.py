@@ -21,10 +21,11 @@ from models import create_model
 # net = model()
 
 #Able to create model and everything else here just need to modify to allow access to gan and discr
-opt_train = TrainOptions().parse()
-train_data = create_dataset(opt_train)
 opt_test = TestOptions().parse()
 test_data = create_dataset(opt_test)
+opt_train = TrainOptions().parse()
+train_data = create_dataset(opt_train)
+
 
 net = create_model(opt_train)
 print("model created")
