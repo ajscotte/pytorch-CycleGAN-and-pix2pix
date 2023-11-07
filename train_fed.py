@@ -70,8 +70,8 @@ def train(model, opt):
         model.update_learning_rate()    # update learning rates in the beginning of every epoch.
         print("dataset loop")
         print(dataset)
-        # for i, data in enumerate(dataset):  # inner loop within one epoch
-        #     print(data)
+        for i, data in enumerate(dataset):  # inner loop within one epoch
+            print(data)
         #     print("start loop")
         #     iter_start_time = time.time()  # timer for computation per iteration
         #     print("freq")
