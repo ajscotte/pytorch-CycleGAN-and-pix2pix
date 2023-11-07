@@ -75,16 +75,6 @@ class CustomDatasetDataLoader():
         self.dataset = dataset_class(opt)
         print("dataset [%s] was created" % type(self.dataset).__name__)
         
-        
-        # #load as a federated set(can add sets later on)
-        # federated_dataset = sy.FederatedDataset(data=(self.dataset,))
-        
-        # self.dataloader = sy.FederatedDataLoader(
-        #     federated_dataset,
-        #     batch_size = opt.batch_size,
-        #     shuffle = not opt.serial_batches,
-        #     num_workers= 1
-        # )
         self.dataloader = torch.utils.data.DataLoader(
             self.dataset,
             batch_size=opt.batch_size,
