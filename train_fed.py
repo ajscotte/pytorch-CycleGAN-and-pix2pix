@@ -72,8 +72,8 @@ def train(model, opt):
         print("dataset loop")
         print(dataset)
         
-        for i in range(100):
-            print(i)
+        # for i in range(100):
+        #     print(i)
         for i, data in enumerate(dataset):  # inner loop within one epoch
             print(i)
         #     print("start loop")
