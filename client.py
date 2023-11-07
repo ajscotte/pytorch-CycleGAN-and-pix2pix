@@ -104,10 +104,10 @@ class FlowerClient(fl.client.NumPyClient):
     print("eval1")
     self.set_parameters(parameters)
     print("eval2")
-    loss, accuracy = test(net, test_data, opt_test)
+    # loss, accuracy = test(net, test_data, opt_test)
     print("eval3")
     # return float(loss), len(testloader.dataset), {"accuracy": float(accuracy)}
-    return float(loss), len(test_data), {"accuracy": float(accuracy)}
+    return float(0), len(test_data), {"accuracy": float(0)}
 
 # Start Flower client
 fl.client.start_numpy_client(server_address="127.0.0.1:8080", client=FlowerClient())
