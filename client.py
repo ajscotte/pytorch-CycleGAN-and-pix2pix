@@ -32,7 +32,7 @@ net = create_model(opt_train)
 print("model created")
 print("setup")
 net.setup(opt_train)   
-net.to(DEVICE)
+# net.to(DEVICE)
 
 # Define Flower client
 class FlowerClient(fl.client.NumPyClient):
