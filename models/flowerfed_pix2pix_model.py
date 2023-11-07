@@ -145,4 +145,5 @@ class FlowerfedPix2PixModel(BaseModel):
         
         self.netG.load_state_dict(gen, strict=False)
         self.netD.load_state_dict(disc, strict=False)
+        
 

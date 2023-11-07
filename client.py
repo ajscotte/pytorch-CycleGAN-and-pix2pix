@@ -19,6 +19,7 @@ from models import create_model
 #todo: move parse over here so only need in one file
 # trainloader, testloader = load_data()
 # net = model()
+DEVICE = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
 
 #Able to create model and everything else here just need to modify to allow access to gan and discr
 opt_test = TestOptions().parse()
@@ -31,6 +32,7 @@ net = create_model(opt_train)
 print("model created")
 print("setup")
 net.setup(opt_train)   
+net.to(DEVICE)
 
 # Define Flower client
 class FlowerClient(fl.client.NumPyClient):
