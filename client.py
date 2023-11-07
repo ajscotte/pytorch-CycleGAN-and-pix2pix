@@ -31,8 +31,7 @@ train_data = create_dataset(opt_train)
 net = create_model(opt_train)
 print("model created")
 print("setup")
-net.setup(opt_train)   
-net.to('cuda')
+net.setup(opt_train)
 train_data.to('cuda')
 
 for i, data in enumerate(train_data):  # inner loop within one epoch
