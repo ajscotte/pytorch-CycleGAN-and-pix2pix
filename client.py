@@ -52,13 +52,14 @@ class FlowerClient(fl.client.NumPyClient):
     # }
 
     # return parameters_dict
-    
+    print("get1")
     generator, discriminator = net.state_dict()
+    print("get2")
     g = [val.cpu().numpy() for _, val in generator.items()]
     d = [val.cpu().numpy() for _, val in discriminator.items()]
     
     model_weights = g + d
-    
+    print("get done")
     return model_weights
 
   def set_parameters(self, parameters):
@@ -66,8 +67,9 @@ class FlowerClient(fl.client.NumPyClient):
     # state_dict = OrderedDict({k: torch.tensor(v) for k, v in params_dict})
     # net.load_state_dict(state_dict, strict=True)
     
+    print("set1")
     generator, discriminator = net.state_dict()
-    
+    print("set2")
     len_gparam = len([val.cpu().numpy() for _, val in generator.items()])
     len_dparam = len([val.cpu().numpy() for _, val in discriminator.items()])
     
@@ -79,9 +81,9 @@ class FlowerClient(fl.client.NumPyClient):
     
     # params_dict = zip(self.g_ema.state_dict().keys(), parameters[-len_emaparam:])
     # g_emastate_dict = OrderedDict({k: torch.tensor(v) for k, v in params_dict})
-    
+    print("set load")
     net.load_state_dict(gstate_dict, dstate_dict)
-    
+    print("set done")
     
     # self.generator.load_state_dict(gstate_dict, strict=False)
     # self.discriminator.load_state_dict(dstate_dict, strict=False)
@@ -89,14 +91,20 @@ class FlowerClient(fl.client.NumPyClient):
     # self.g_ema.load_state_dict(g_emastate_dict, strict=False)
 
   def fit(self, parameters, config):
+    print("fit1")
     self.set_parameters(parameters)
+    print("fit2")
     train(net, train_data, opt_train)
+    print("train_done")
     # return self.get_parameters(config={}), len(trainloader.dataset), {}
     return self.get_parameters(config={}), len(train_data), {}
 
   def evaluate(self, parameters, config):
+    print("eval1")
     self.set_parameters(parameters)
+    print("eval2")
     loss, accuracy = test(net, test_data, opt_test)
+    print("eval3")
     # return float(loss), len(testloader.dataset), {"accuracy": float(accuracy)}
     return float(loss), len(test_data), {"accuracy": float(accuracy)}
 
