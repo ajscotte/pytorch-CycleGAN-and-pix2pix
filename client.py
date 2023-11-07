@@ -32,10 +32,10 @@ net = create_model(opt_train)
 print("model created")
 print("setup")
 net.setup(opt_train)
-train_data.to('cuda')
+# train_data.to('cuda')
 
 for i, data in enumerate(train_data):  # inner loop within one epoch
-  print(data)
+  data.to('cuda')
 
 # Define Flower client
 class FlowerClient(fl.client.NumPyClient):
