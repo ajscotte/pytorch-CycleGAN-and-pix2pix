@@ -34,6 +34,7 @@ def train(model, opt):
     #in real model would have to have this as another system(however no need for the moment)
     
     #todo: change this just to be sample dataset
+    print(opt)
     dataset = create_dataset(opt)  # create a dataset given opt.dataset_mode and other options
     
     dataset_size = len(dataset)    # get the number of images in the dataset.
