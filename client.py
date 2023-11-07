@@ -85,7 +85,7 @@ class FlowerClient(fl.client.NumPyClient):
     print("fit1")
     self.set_parameters(parameters)
     print("fit2")
-    size = train(net, opt_train)
+    size = train(opt_train)
     print("train_done")
     # return self.get_parameters(config={}), len(trainloader.dataset), {}
     return self.get_parameters(config={}), size, {}
