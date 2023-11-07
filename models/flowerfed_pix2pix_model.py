@@ -128,6 +128,21 @@ class Pix2PixModel(BaseModel):
         self.backward_G()                   # calculate graidents for G
         self.optimizer_G.step()             # update G's weights
         
-    def load_model():
-        return Pix2PixModel().to(DEVICE)
+    # def load_model():
+    #     return Pix2PixModel().to(DEVICE)
+    def state_dict(self):
+        #maybe return them as a tuple
+        # return {'generator': self.netG.state_dict(), 'discriminator': self.netD.state_dict()}
+        return (self.netG.state_dict(), self.netD.state_dict())
     
+    def load_state_dict(self, gen, disc):
+        #based on the tuple maybe load based on that 
+        
+        #try if first doesn;t work
+        #gen, disc = state_dict
+        #self.netG.load_state_dict(gen)
+        #self.netD.load_state_dict(disc)
+        
+        self.netG.load_state_dict(gen, strict=False)
+        self.netD.load_state_dict(disc, strict=False)
+
