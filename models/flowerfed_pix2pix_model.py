@@ -5,7 +5,7 @@ import flwr
 
 # DEVICE = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
 
-class Pix2PixModel(BaseModel):
+class FlowerfedPix2PixModel(BaseModel):
     """ This class implements the pix2pix model, for learning a mapping from input images to output images given paired data.
 
     The model training requires '--dataset_mode aligned' dataset.
