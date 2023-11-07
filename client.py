@@ -101,6 +101,6 @@ class FlowerClient(fl.client.NumPyClient):
     return float(loss), len(test_data), {"accuracy": float(accuracy)}
 
 # Start Flower client
-# fl.client.start_numpy_client(server_address="127.0.0.1:8080", client=FlowerClient())
+fl.client.start_numpy_client(server_address="127.0.0.1:8080", client=FlowerClient())
 
-train(net, train_data, opt_train)
+# train(net, train_data, opt_train)
