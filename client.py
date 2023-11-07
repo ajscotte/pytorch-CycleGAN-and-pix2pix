@@ -25,7 +25,7 @@ DEVICE = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
 # opt_test = TestOptions().parse()
 # test_data = create_dataset(opt_test)
 opt_train = TrainOptions().parse()
-# train_data = create_dataset(opt_train)
+train_data = create_dataset(opt_train)
 
 
 net = create_model(opt_train)
@@ -33,6 +33,9 @@ print("model created")
 print("setup")
 net.setup(opt_train)   
 # net.to(DEVICE)
+
+for i, data in enumerate(train_data):  # inner loop within one epoch
+  print(data)
 
 # Define Flower client
 class FlowerClient(fl.client.NumPyClient):
