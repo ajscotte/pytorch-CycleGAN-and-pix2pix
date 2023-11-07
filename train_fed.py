@@ -20,21 +20,21 @@ See frequently asked questions at: https://github.com/junyanz/pytorch-CycleGAN-a
 """
 import time
 # from options.train_options import TrainOptions
-# from data import create_dataset
+from data import create_dataset
 # from models import create_model
 from util.visualizer import Visualizer
 
     
     #added this to create a vurtual worker
     #end    
-def train(model, dataset, opt):    
+def train(model, opt):    
     #todo: change this for fed
     # opt = TrainOptions().parse()   # get training options
     
     #in real model would have to have this as another system(however no need for the moment)
     
     #todo: change this just to be sample dataset
-    # dataset = create_dataset(opt)  # create a dataset given opt.dataset_mode and other options
+    dataset = create_dataset(opt)  # create a dataset given opt.dataset_mode and other options
     
     dataset_size = len(dataset)    # get the number of images in the dataset.
     print('The number of training images = %d' % dataset_size)
@@ -71,6 +71,7 @@ def train(model, dataset, opt):
         print("dataset loop")
         print(dataset)
         for i, data in enumerate(dataset):  # inner loop within one epoch
+            print(data)
             print("start loop")
             iter_start_time = time.time()  # timer for computation per iteration
             print("freq")
@@ -110,3 +111,4 @@ def train(model, dataset, opt):
             model.save_networks(epoch)
 
         print('End of epoch %d / %d \t Time Taken: %d sec' % (epoch, opt.n_epochs + opt.n_epochs_decay, time.time() - epoch_start_time))
+    return dataset_size

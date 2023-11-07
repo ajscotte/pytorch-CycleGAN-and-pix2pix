@@ -24,11 +24,13 @@ from models import create_model
 opt_test = TestOptions().parse()
 test_data = create_dataset(opt_test)
 opt_train = TrainOptions().parse()
-train_data = create_dataset(opt_train)
+# train_data = create_dataset(opt_train)
 
 
 net = create_model(opt_train)
 print("model created")
+print("setup")
+net.setup(opt_train)   
 
 # Define Flower client
 class FlowerClient(fl.client.NumPyClient):
@@ -39,20 +41,6 @@ class FlowerClient(fl.client.NumPyClient):
   
   def get_parameters(self, config):
     
-    #todo: create a state_dict for each model in the pix2pix model class
-    # 
-    # return [val.cpu().numpy() for _, val in net.state_dict().items()]
-    # generator_state_dict = self.generator.state_dict()
-    # discriminator_state_dict = self.discriminator.state_dict()
-
-    #     # Create a dictionary to store the parameters
-    # parameters_dict = {
-    #       'generator_state_dict': generator_state_dict,
-    #       'discriminator_state_dict': discriminator_state_dict,
-    #       'config': config
-    # }
-
-    # return parameters_dict
     print("get1")
     generator, discriminator = net.state_dict()
     print("get2")
@@ -64,9 +52,6 @@ class FlowerClient(fl.client.NumPyClient):
     return model_weights
 
   def set_parameters(self, parameters):
-    # params_dict = zip(net.state_dict().keys(), parameters)
-    # state_dict = OrderedDict({k: torch.tensor(v) for k, v in params_dict})
-    # net.load_state_dict(state_dict, strict=True)
     
     print("set1")
     generator, discriminator = net.state_dict()
@@ -95,10 +80,10 @@ class FlowerClient(fl.client.NumPyClient):
     print("fit1")
     self.set_parameters(parameters)
     print("fit2")
-    train(net, train_data, opt_train)
+    size = train(net, train_data, opt_train)
     print("train_done")
     # return self.get_parameters(config={}), len(trainloader.dataset), {}
-    return self.get_parameters(config={}), len(train_data), {}
+    return self.get_parameters(config={}), size, {}
 
   def evaluate(self, parameters, config):
     print("eval1")
