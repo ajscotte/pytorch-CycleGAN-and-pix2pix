@@ -81,8 +81,8 @@ def train(model, dataset, opt):
             epoch_iter += opt.batch_size
             
             print("model updates")
-            model.set_input(data)         # unpack data from dataset and apply preprocessing
-            model.optimize_parameters()   # calculate loss functions, get gradients, update network weights !!also updates!!
+            # model.set_input(data)         # unpack data from dataset and apply preprocessing
+            # model.optimize_parameters()   # calculate loss functions, get gradients, update network weights !!also updates!!
 
             #plan add logic to stop if validation set starts to increase in loss meaning overfitting has occured
             print("done here")
