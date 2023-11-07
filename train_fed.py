@@ -21,13 +21,13 @@ See frequently asked questions at: https://github.com/junyanz/pytorch-CycleGAN-a
 import time
 # from options.train_options import TrainOptions
 from data import create_dataset
-from models import create_model
+# from models import create_model
 from util.visualizer import Visualizer
 
     
     #added this to create a vurtual worker
     #end    
-def train(opt):    
+def train(model, opt):    
     #todo: change this for fed
     # opt = TrainOptions().parse()   # get training options
     
@@ -44,9 +44,9 @@ def train(opt):
     #send this to virtual location as well
     
     #todo: change this so always points to fed model
-    model = create_model(opt)      # create a model given opt.model and other options
+    # model = create_model(opt)      # create a model given opt.model and other options
     # print("setup")
-    model.setup(opt)               # regular setup: load and print networks; create schedulers
+    # model.setup(opt)               # regular setup: load and print networks; create schedulers
     
     
     
@@ -72,8 +72,8 @@ def train(opt):
         print("dataset loop")
         print(dataset)
         
-        # for i in range(100):
-        #     print(i)
+        for i in range(100):
+            print(i)
         for i, data in enumerate(dataset):  # inner loop within one epoch
             print(i)
         #     print("start loop")
