@@ -22,8 +22,8 @@ from models import create_model
 DEVICE = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
 
 #Able to create model and everything else here just need to modify to allow access to gan and discr
-opt_test = TestOptions().parse()
-test_data = create_dataset(opt_test)
+# opt_test = TestOptions().parse()
+# test_data = create_dataset(opt_test)
 opt_train = TrainOptions().parse()
 # train_data = create_dataset(opt_train)
 
