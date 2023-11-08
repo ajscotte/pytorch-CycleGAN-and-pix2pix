@@ -104,11 +104,11 @@ class FlowerClient(fl.client.NumPyClient):
 
 # Start Flower client
 opt = TrainOptions().parse()
-client=FlowerClient(opt)
+# client=FlowerClient(opt)
 
-# fl.client.start_numpy_client(server_address="127.0.0.1:8080", client)
+fl.client.start_numpy_client(server_address="127.0.0.1:8080", client=FlowerClient(opt))
 # client = ClientGAN(args, generator, discriminator, g_ema, g_optim, d_optim, train_loader)
 
-fl.client.start_numpy_client("127.0.0.1:8080", client)
+# fl.client.start_numpy_client("127.0.0.1:8080", client)
 
 # train(net, train_data, opt_train)
