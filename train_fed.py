@@ -58,35 +58,35 @@ def train(model, dataset, opt):
     #add and outer loop for the k-folds
     print("start epoch")
     for epoch in range(opt.epoch_count, opt.n_epochs + opt.n_epochs_decay + 1):    # outer loop for different epochs; we save the model by <epoch_count>, <epoch_count>+<save_latest_freq>
-        print("time 1")
+        # print("time 1")
         epoch_start_time = time.time()  # timer for entire epoch
         iter_data_time = time.time()    # timer for data loading per iteration
        
-        print("vis reset")
+        # print("vis reset")
         epoch_iter = 0                  # the number of training iterations in current epoch, reset to 0 every epoch
         visualizer.reset()    # reset the visualizer: make sure it saves the results to HTML at least once every epoch
         
-        print("update learn")
+        # print("update learn")
         model.update_learning_rate()    # update learning rates in the beginning of every epoch.
-        print("dataset loop")
-        print(dataset)
+        # print("dataset loop")
+        # print(dataset)
         for i, data in enumerate(dataset):  # inner loop within one epoch
             # print(data)
-            print("start loop")
+            # print("start loop")
             iter_start_time = time.time()  # timer for computation per iteration
-            print("freq")
+            # print("freq")
             if total_iters % opt.print_freq == 0:
                 t_data = iter_start_time - iter_data_time
 
             total_iters += opt.batch_size
             epoch_iter += opt.batch_size
             
-            print("model updates")
+            # print("model updates")
             model.set_input(data)         # unpack data from dataset and apply preprocessing
             model.optimize_parameters()   # calculate loss functions, get gradients, update network weights !!also updates!!
 
             #plan add logic to stop if validation set starts to increase in loss meaning overfitting has occured
-            print("done here")
+            # print("done here")
             if total_iters % opt.display_freq == 0:   # display images on visdom and save images to a HTML file
                 save_result = total_iters % opt.update_html_freq == 0
                 model.compute_visuals()
