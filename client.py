@@ -19,19 +19,16 @@ from models import create_model
 #todo: move parse over here so only need in one file
 # trainloader, testloader = load_data()
 # net = model()
-DEVICE = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
+# DEVICE = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
 
 #Able to create model and everything else here just need to modify to allow access to gan and discr
 # opt_test = TestOptions().parse()
 # test_data = create_dataset(opt_test)
-opt_train = TrainOptions().parse()
-train_data = create_dataset(opt_train)
 
 
-net = create_model(opt_train)
-print("model created")
-print("setup")
-net.setup(opt_train)
+
+
+
 # train_data.to('cuda')
 
 # for i, data in enumerate(train_data):  # inner loop within one epoch
@@ -44,10 +41,16 @@ class FlowerClient(fl.client.NumPyClient):
   
   #todo change the model to work with both models at once either in tuple or dict form
   
+  def __init__(self, opt_train):
+    self.opt_train = opt_train
+    self.train_data = create_dataset(opt_train)
+    self.net = create_model(opt_train)
+    self.net.setup(opt_train)
+  
   def get_parameters(self, config):
     
     print("get1")
-    generator, discriminator = net.state_dict()
+    generator, discriminator = self.net.state_dict()
     print("get2")
     g = [val.cpu().numpy() for _, val in generator.items()]
     d = [val.cpu().numpy() for _, val in discriminator.items()]
@@ -59,7 +62,7 @@ class FlowerClient(fl.client.NumPyClient):
   def set_parameters(self, parameters):
     
     print("set1")
-    generator, discriminator = net.state_dict()
+    generator, discriminator = self.net.state_dict()
     print("set2")
     len_gparam = len([val.cpu().numpy() for _, val in generator.items()])
     len_dparam = len([val.cpu().numpy() for _, val in discriminator.items()])
@@ -73,7 +76,7 @@ class FlowerClient(fl.client.NumPyClient):
     # params_dict = zip(self.g_ema.state_dict().keys(), parameters[-len_emaparam:])
     # g_emastate_dict = OrderedDict({k: torch.tensor(v) for k, v in params_dict})
     print("set load")
-    net.load_state_dict(gstate_dict, dstate_dict)
+    self.net.load_state_dict(gstate_dict, dstate_dict)
     print("set done")
     
     # self.generator.load_state_dict(gstate_dict, strict=False)
@@ -85,7 +88,7 @@ class FlowerClient(fl.client.NumPyClient):
     print("fit1")
     self.set_parameters(parameters)
     print("fit2")
-    size = train(net, train_data, opt_train)
+    size = train(self.net, self.train_data, self.opt_train)
     print("train_done")
     # return self.get_parameters(config={}), len(trainloader.dataset), {}
     return self.get_parameters(config={}), size, {}
@@ -100,6 +103,12 @@ class FlowerClient(fl.client.NumPyClient):
     return float(0), 1, {"accuracy": float(0)}
 
 # Start Flower client
-fl.client.start_numpy_client(server_address="127.0.0.1:8080", client=FlowerClient())
+opt = TrainOptions().parse()
+client=FlowerClient(opt)
+
+# fl.client.start_numpy_client(server_address="127.0.0.1:8080", client)
+# client = ClientGAN(args, generator, discriminator, g_ema, g_optim, d_optim, train_loader)
+
+fl.client.start_numpy_client("127.0.0.1:8080", client)
 
 # train(net, train_data, opt_train)
