@@ -2,13 +2,13 @@ import flwr as fl
 import torch
 
 from collections import OrderedDict
-# import models.flowerfed_pix2pix_model as model
+import models.flowerfed_pix2pix_model as model
 from train_fed import train 
 from test_fed import test
 from options.train_options import TrainOptions
 from options.test_options import TestOptions
 from data import create_dataset
-# from models import create_model
+from models import create_model
 
 
 
@@ -45,7 +45,10 @@ class FlowerClient(fl.client.NumPyClient):
     self.opt_train = opt_train
     self.train_data = create_dataset(opt_train)
     self.train_data = self.train_data
-
+    
+    #creates a new model without any parameters(initial parameters sent by server)
+    self.net = create_model(opt)
+    self.net.setup(opt)
   
   def get_parameters(self, config):
     
