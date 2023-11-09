@@ -61,6 +61,8 @@ def create_dataset(opt):
     return dataset
 
 
+
+#modify this do be a normal dataloader
 class CustomDatasetDataLoader():
     """Wrapper class of Dataset class that performs multi-threaded data loading"""
 

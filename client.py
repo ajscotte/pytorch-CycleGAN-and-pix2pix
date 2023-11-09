@@ -44,7 +44,7 @@ class FlowerClient(fl.client.NumPyClient):
   def __init__(self, opt_train):
     self.opt_train = opt_train
     self.train_data = create_dataset(opt_train)
-    self.train_data = self.train_data[:10] 
+    self.train_data = self.train_data
     self.net = create_model(opt_train)
     self.net.setup(opt_train)
   
