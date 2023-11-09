@@ -2,13 +2,13 @@ import flwr as fl
 import torch
 
 from collections import OrderedDict
-import models.flowerfed_pix2pix_model as model
+# import models.flowerfed_pix2pix_model as model
 from train_fed import train 
 from test_fed import test
 from options.train_options import TrainOptions
 from options.test_options import TestOptions
 from data import create_dataset
-from models import create_model
+# from models import create_model
 
 
 
@@ -45,26 +45,20 @@ class FlowerClient(fl.client.NumPyClient):
     self.opt_train = opt_train
     self.train_data = create_dataset(opt_train)
     self.train_data = self.train_data
-    self.net = create_model(opt_train)
-    self.net.setup(opt_train)
+
   
   def get_parameters(self, config):
     
-    print("get1")
     generator, discriminator = self.net.state_dict()
-    print("get2")
     g = [val.cpu().numpy() for _, val in generator.items()]
     d = [val.cpu().numpy() for _, val in discriminator.items()]
     
     model_weights = g + d
-    print("get done")
     return model_weights
 
   def set_parameters(self, parameters):
     
-    print("set1")
     generator, discriminator = self.net.state_dict()
-    print("set2")
     len_gparam = len([val.cpu().numpy() for _, val in generator.items()])
     len_dparam = len([val.cpu().numpy() for _, val in discriminator.items()])
     
@@ -76,9 +70,7 @@ class FlowerClient(fl.client.NumPyClient):
     
     # params_dict = zip(self.g_ema.state_dict().keys(), parameters[-len_emaparam:])
     # g_emastate_dict = OrderedDict({k: torch.tensor(v) for k, v in params_dict})
-    print("set load")
     self.net.load_state_dict(gstate_dict, dstate_dict)
-    print("set done")
     
     # self.generator.load_state_dict(gstate_dict, strict=False)
     # self.discriminator.load_state_dict(dstate_dict, strict=False)
@@ -86,12 +78,8 @@ class FlowerClient(fl.client.NumPyClient):
     # self.g_ema.load_state_dict(g_emastate_dict, strict=False)
 
   def fit(self, parameters, config):
-    print("fit1")
     self.set_parameters(parameters)
-    print("fit2")
     size = train(self.net, self.train_data, self.opt_train)
-    print("train_done")
-    # return self.get_parameters(config={}), len(trainloader.dataset), {}
     return self.get_parameters(config={}), size, {}
 
   def evaluate(self, parameters, config):
