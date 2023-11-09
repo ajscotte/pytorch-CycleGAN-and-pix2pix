@@ -50,7 +50,7 @@ def test(model, dataset, opt):
     opt.display_id = -1   # no visdom display; the test code saves the results to a HTML file.
     # dataset = create_dataset(opt)  # create a dataset given opt.dataset_mode and other options
     # model = create_model(opt)      # create a model given opt.model and other options
-    model.setup(opt)               # regular setup: load and print networks; create schedulers
+    # model.setup(opt)               # regular setup: load and print networks; create schedulers
 
     # initialize logger
     if opt.use_wandb:
