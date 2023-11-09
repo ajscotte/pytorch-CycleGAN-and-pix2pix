@@ -73,7 +73,7 @@ def get_evaluate_fn(model, opt):
 
 
 opt_train = TrainOptions().parse()
-opt_test = TestOptions.parse()
+opt_test = TestOptions().parse()
 #change this to load a model from a point in memory if you want to use a past model
 net = create_model(opt_train)
 net.setup(opt_train)
