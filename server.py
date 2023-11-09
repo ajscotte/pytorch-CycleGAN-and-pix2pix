@@ -24,14 +24,14 @@ def fit_config(rnd: int):
     return config
 
 
-# def evaluate_config(rnd: int):
-#     """Return evaluation configuration dict for each round.
-#     Perform five local evaluation steps on each client (i.e., use five
-#     batches) during rounds one to three, then increase to ten local
-#     evaluation steps.
-#     """
-#     val_steps = 5 if (rnd < 4 and rnd >0 )else 10
-#     return {"rnd": rnd, "val_steps": val_steps}
+def evaluate_config(rnd: int):
+    """Return evaluation configuration dict for each round.
+    Perform five local evaluation steps on each client (i.e., use five
+    batches) during rounds one to three, then increase to ten local
+    evaluation steps.
+    """
+    val_steps = 5 if rnd < 4 else 10
+    return {"rnd": rnd, "val_steps": val_steps}
 
 def set_parameters(net, parameters):
     
@@ -84,7 +84,7 @@ d = [val.cpu().numpy() for _, val in discriminator.items()]
     
 model_weights = g + d
 
-evaluate_config = fl.server.EvaluationConfig(evaluate_every=1, num_eval_batches=1)
+
 
 fl.server.start_server(
     server_address="0.0.0.0:8080",
