@@ -4,6 +4,8 @@ from models import create_model
 from options.train_options import TrainOptions
 
 opt = TrainOptions().parse()
+
+#change this to load a model from a point in memory if you want to use a past model
 net = create_model(opt)
 net.setup(opt)
     
