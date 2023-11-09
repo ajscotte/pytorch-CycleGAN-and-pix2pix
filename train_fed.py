@@ -57,9 +57,9 @@ def train(model, dataset, opt):
     
     #add and outer loop for the k-folds
     print("start epoch")
-    for epoch in range(opt.epoch_count, opt.n_epochs + opt.n_epochs_decay + 1):    # outer loop for different epochs; we save the model by <epoch_count>, <epoch_count>+<save_latest_freq>
+    # for epoch in range(opt.epoch_count, opt.n_epochs + opt.n_epochs_decay + 1):    # outer loop for different epochs; we save the model by <epoch_count>, <epoch_count>+<save_latest_freq>
         # print("time 1")
-    # for epoch in range(10): 
+    for epoch in range(10): 
         epoch_start_time = time.time()  # timer for entire epoch
         iter_data_time = time.time()    # timer for data loading per iteration
        
