@@ -1,44 +1,47 @@
 import os
+import shutil
+import random
 
-def split_file(file_path, output_dir):
-    # Check if the file exists
-    if not os.path.exists(file_path):
-        print(f"Error: File '{file_path}' not found.")
+def split_directory(input_dir, output_dir1, output_dir2):
+    # Check if the input directory exists
+    if not os.path.exists(input_dir):
+        print(f"Error: Directory '{input_dir}' not found.")
         return
     
-    # Check if the output directory exists, create it if not
-    if not os.path.exists(output_dir):
-        os.makedirs(output_dir)
+    # Check if the output directories exist, create them if not
+    for output_dir in [output_dir1, output_dir2]:
+        if not os.path.exists(output_dir):
+            os.makedirs(output_dir)
 
-    # Get the size of the file
-    file_size = os.path.getsize(file_path)
+    # Get the list of image files in the input directory
+    image_files = [f for f in os.listdir(input_dir) if os.path.isfile(os.path.join(input_dir, f))]
 
-    # Calculate the midpoint to split the file into two equal parts
-    midpoint = file_size // 2
+    # Shuffle the list of image files
+    random.shuffle(image_files)
 
-    # Open the input file for reading
-    with open(file_path, 'rb') as input_file:
-        # Read the first half of the file
-        first_half = input_file.read(midpoint)
+    # Calculate the midpoint to split the list into two equal parts
+    midpoint = len(image_files) // 2
 
-        # Create the output paths for the two parts
-        first_half_path = os.path.join(output_dir, 'part1_' + os.path.basename(file_path))
-        second_half_path = os.path.join(output_dir, 'part2_' + os.path.basename(file_path))
+    # Split the list into two equal parts
+    first_half = image_files[:midpoint]
+    second_half = image_files[midpoint:]
 
-        # Write the first half to the first output file
-        with open(first_half_path, 'wb') as output_file:
-            output_file.write(first_half)
+    # Move files from the input directory to the first output directory
+    for file_name in first_half:
+        source_path = os.path.join(input_dir, file_name)
+        destination_path = os.path.join(output_dir1, file_name)
+        shutil.move(source_path, destination_path)
 
-        # Read the second half of the file
-        second_half = input_file.read()
+    # Move files from the input directory to the second output directory
+    for file_name in second_half:
+        source_path = os.path.join(input_dir, file_name)
+        destination_path = os.path.join(output_dir2, file_name)
+        shutil.move(source_path, destination_path)
 
-        # Write the second half to the second output file
-        with open(second_half_path, 'wb') as output_file:
-            output_file.write(second_half)
-
-    print(f"File successfully split into two equal parts: {first_half_path} and {second_half_path}")
+    print(f"Directory successfully split into two equal parts: {output_dir1} and {output_dir2}")
 
 # Example usage
-input_file_path = r'/home/ajs667/federated_pix2pix_real/pytorch-CycleGAN-and-pix2pix/datasets/example_split/PreEtch_9wafer_TGAP_ZiwangPairs/AB_1'
-output_directory = r'/home/ajs667/federated_pix2pix_real/pytorch-CycleGAN-and-pix2pix/datasets/example_split/PreEtch_9wafer_TGAP_ZiwangPairs'
-split_file(input_file_path, output_directory)
+input_directory = '/home/ajs667/federated_pix2pix_real/pytorch-CycleGAN-and-pix2pix/datasets/example_split/PreEtch_9wafer_TGAP_ZiwangPairs/AB_1'
+output_directory1 = '/home/ajs667/federated_pix2pix_real/pytorch-CycleGAN-and-pix2pix/datasets/example_split/part1'
+output_directory2 = '/home/ajs667/federated_pix2pix_real/pytorch-CycleGAN-and-pix2pix/datasets/example_split/part2'
+split_directory(input_directory, output_directory1, output_directory2)
