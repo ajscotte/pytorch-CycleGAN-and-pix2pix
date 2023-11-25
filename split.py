@@ -39,6 +39,6 @@ def split_file(file_path, output_dir):
     print(f"File successfully split into two equal parts: {first_half_path} and {second_half_path}")
 
 # Example usage
-input_file_path = 'path/to/your/input/file.txt'
-output_directory = 'path/to/your/output/directory'
+input_file_path = r'/home/ajs667/federated_pix2pix_real/pytorch-CycleGAN-and-pix2pix/datasets/example_split/PreEtch_9wafer_TGAP_ZiwangPairs/AB_1'
+output_directory = r'/home/ajs667/federated_pix2pix_real/pytorch-CycleGAN-and-pix2pix/datasets/example_split/PreEtch_9wafer_TGAP_ZiwangPairs'
 split_file(input_file_path, output_directory)
