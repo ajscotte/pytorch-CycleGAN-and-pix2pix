@@ -89,9 +89,9 @@ model_weights = g + d
 fl.server.start_server(
     server_address="0.0.0.0:8080",
     config=fl.server.ServerConfig(num_rounds=1),
-    strategy=fl.server.strategy.FedAvg(min_available_clients=2, 
-                                       min_evaluate_clients=2, 
-                                       min_fit_clients=2, 
+    strategy=fl.server.strategy.FedAvg(min_available_clients=1, 
+                                       min_evaluate_clients=1, 
+                                       min_fit_clients=1, 
                                        initial_parameters=fl.common.ndarrays_to_parameters(model_weights),
                                        evaluate_fn=get_evaluate_fn(net, opt_test),
                                        on_fit_config_fn=fit_config,
