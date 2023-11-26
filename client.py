@@ -94,7 +94,7 @@ class FlowerClient(fl.client.NumPyClient):
     print("eval1")
     self.set_parameters(parameters)
     print("eval2")
-    test(self.net, self.test_data, self.opt_test)
+    # test(self.net, self.test_data, self.opt_test)
     print("eval3")
     # return float(loss), len(testloader.dataset), {"accuracy": float(accuracy)}
     return float(0), 1, {"accuracy": float(0)}
