@@ -90,7 +90,7 @@ class FlowerClient(fl.client.NumPyClient):
     return self.get_parameters(config={}), size, {}
 
   def evaluate(self, parameters, config):
-    self.net.setup(self.opt_test)
+    # self.net.setup(self.opt_test)
     print("eval1")
     self.set_parameters(parameters)
     print("eval2")
