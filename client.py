@@ -104,7 +104,7 @@ opt_train = TrainOptions().parse()
 opt_test = TestOptions().parse()
 # client=FlowerClient(opt)
 
-fl.client.start_numpy_client(server_address="127.0.0.1:8080", client=FlowerClient(opt_train))
+fl.client.start_numpy_client(server_address="127.0.0.1:8080", client=FlowerClient(opt_train, opt_test))
 # client = ClientGAN(args, generator, discriminator, g_ema, g_optim, d_optim, train_loader)
 
 # fl.client.start_numpy_client("127.0.0.1:8080", client)
