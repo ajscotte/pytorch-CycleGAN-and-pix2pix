@@ -41,14 +41,17 @@ class FlowerClient(fl.client.NumPyClient):
   
   #todo change the model to work with both models at once either in tuple or dict form
   
-  def __init__(self, opt_train):
+  def __init__(self, opt_train, opt_test):
     self.opt_train = opt_train
     self.train_data = create_dataset(opt_train)
     self.train_data = self.train_data
     
+    self.opt_train = opt_test
+    self.train_data = create_dataset(opt_test)
+    
     #creates a new model without any parameters(initial parameters sent by server)
-    self.net = create_model(opt)
-    self.net.setup(opt)
+    self.net = create_model(opt_train)
+    self.net.setup(opt_train)
   
   def get_parameters(self, config):
     
@@ -89,16 +92,17 @@ class FlowerClient(fl.client.NumPyClient):
     print("eval1")
     self.set_parameters(parameters)
     print("eval2")
-    # loss, accuracy = test(net, test_data, opt_test)
+    test(self.net, self.test_data, self.opt_test)
     print("eval3")
     # return float(loss), len(testloader.dataset), {"accuracy": float(accuracy)}
     return float(0), 1, {"accuracy": float(0)}
 
 # Start Flower client
-opt = TrainOptions().parse()
+opt_train = TrainOptions().parse()
+opt_test = TestOptions().parse()
 # client=FlowerClient(opt)
 
-fl.client.start_numpy_client(server_address="127.0.0.1:8080", client=FlowerClient(opt))
+fl.client.start_numpy_client(server_address="127.0.0.1:8080", client=FlowerClient(opt_train))
 # client = ClientGAN(args, generator, discriminator, g_ema, g_optim, d_optim, train_loader)
 
 # fl.client.start_numpy_client("127.0.0.1:8080", client)
