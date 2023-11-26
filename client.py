@@ -46,8 +46,8 @@ class FlowerClient(fl.client.NumPyClient):
     self.train_data = create_dataset(opt_train)
     self.train_data = self.train_data
     
-    self.opt_train = opt_test
-    self.train_data = create_dataset(opt_test)
+    self.opt_test = opt_test
+    self.test_data = create_dataset(opt_test)
     
     #creates a new model without any parameters(initial parameters sent by server)
     self.net = create_model(opt_train)
@@ -84,11 +84,13 @@ class FlowerClient(fl.client.NumPyClient):
     # self.g_ema.load_state_dict(g_emastate_dict, strict=False)
 
   def fit(self, parameters, config):
+    self.net.setup(self.opt_train)
     self.set_parameters(parameters)
     size = train(self.net, self.train_data, self.opt_train)
     return self.get_parameters(config={}), size, {}
 
   def evaluate(self, parameters, config):
+    self.net.setup(self.opt_test)
     print("eval1")
     self.set_parameters(parameters)
     print("eval2")
