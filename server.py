@@ -10,7 +10,7 @@ from test_fed import test
 from typing import Dict, Optional, Tuple
 from collections import OrderedDict
 
-
+batch = 0
 def fit_config(rnd: int):
     """Return training configuration dict for each round.
     Keep batch size fixed at 32, perform two rounds of training with one
@@ -63,7 +63,8 @@ def get_evaluate_fn(model, opt):
         # model.load_state_dict(state_dict, strict=True)
         test_data = create_dataset(opt)
         set_parameters(model, parameters)
-        test(model, test_data, opt)
+        test(model, test_data, opt, batch)
+        batch = batch + 1
         return float(1), {}
 
     return evaluate
