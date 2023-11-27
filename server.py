@@ -48,7 +48,7 @@ def set_parameters(net, parameters):
     # g_emastate_dict = OrderedDict({k: torch.tensor(v) for k, v in params_dict})
     net.load_state_dict(gstate_dict, dstate_dict)
 
-def get_evaluate_fn(model, opt, batch):
+def get_evaluate_fn(model, opt):
     """Return an evaluation function for server-side evaluation."""
 
     def evaluate(
@@ -62,7 +62,7 @@ def get_evaluate_fn(model, opt, batch):
         # model.load_state_dict(state_dict, strict=True)
         test_data = create_dataset(opt)
         set_parameters(model, parameters)
-        test(model, test_data, opt, batch)
+        test(model, test_data, opt, server_round)
         batch = batch + 1
         return float(1), {}
 
@@ -76,7 +76,6 @@ opt_train = TrainOptions().parse()
 opt_test = TestOptions().parse()
 #change this to load a model from a point in memory if you want to use a past model
 
-batch = 0
 net = create_model(opt_train)
 net.setup(opt_train)
     
@@ -105,7 +104,7 @@ fl.server.start_server(
     config=fl.server.ServerConfig(num_rounds=3),
     strategy=fl.server.strategy.FedAvg(
                                        initial_parameters=fl.common.ndarrays_to_parameters(model_weights),
-                                       evaluate_fn=get_evaluate_fn(net, opt_test, batch),
+                                       evaluate_fn=get_evaluate_fn(net, opt_test),
                                        on_fit_config_fn=fit_config,
                                        on_evaluate_config_fn=evaluate_config,
                                        ), 
