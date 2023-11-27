@@ -10,7 +10,6 @@ from test_fed import test
 from typing import Dict, Optional, Tuple
 from collections import OrderedDict
 
-batch = 0
 def fit_config(rnd: int):
     """Return training configuration dict for each round.
     Keep batch size fixed at 32, perform two rounds of training with one
@@ -49,7 +48,7 @@ def set_parameters(net, parameters):
     # g_emastate_dict = OrderedDict({k: torch.tensor(v) for k, v in params_dict})
     net.load_state_dict(gstate_dict, dstate_dict)
 
-def get_evaluate_fn(model, opt):
+def get_evaluate_fn(model, opt, batch):
     """Return an evaluation function for server-side evaluation."""
 
     def evaluate(
@@ -76,6 +75,8 @@ def get_evaluate_fn(model, opt):
 opt_train = TrainOptions().parse()
 opt_test = TestOptions().parse()
 #change this to load a model from a point in memory if you want to use a past model
+
+batch = 0
 net = create_model(opt_train)
 net.setup(opt_train)
     
@@ -104,7 +105,7 @@ fl.server.start_server(
     config=fl.server.ServerConfig(num_rounds=3),
     strategy=fl.server.strategy.FedAvg(
                                        initial_parameters=fl.common.ndarrays_to_parameters(model_weights),
-                                       evaluate_fn=get_evaluate_fn(net, opt_test),
+                                       evaluate_fn=get_evaluate_fn(net, opt_test, batch),
                                        on_fit_config_fn=fit_config,
                                        on_evaluate_config_fn=evaluate_config,
                                        ), 
