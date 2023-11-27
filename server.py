@@ -100,7 +100,7 @@ model_weights = g + d
 # )
 fl.server.start_server(
     server_address="0.0.0.0:8080",
-    config=fl.server.ServerConfig(num_rounds=3),
+    config=fl.server.ServerConfig(num_rounds=5),
     strategy=fl.server.strategy.FedAvg(
                                        initial_parameters=fl.common.ndarrays_to_parameters(model_weights),
                                        evaluate_fn=get_evaluate_fn(net, opt_test),
