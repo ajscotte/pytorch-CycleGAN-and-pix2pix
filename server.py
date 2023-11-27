@@ -62,7 +62,7 @@ def get_evaluate_fn(model, opt):
         # model.load_state_dict(state_dict, strict=True)
         test_data = create_dataset(opt)
         set_parameters(model, parameters)
-        test(model, test_data, opt, server_round)
+        test(model, test_data, opt, str(server_round))
         batch = batch + 1
         return float(1), {}
 
