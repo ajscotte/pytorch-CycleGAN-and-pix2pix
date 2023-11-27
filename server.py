@@ -63,7 +63,6 @@ def get_evaluate_fn(model, opt):
         test_data = create_dataset(opt)
         set_parameters(model, parameters)
         test(model, test_data, opt, str(server_round))
-        batch = batch + 1
         return float(1), {}
 
     return evaluate
