@@ -128,21 +128,19 @@ class FlowerfedPix2PixModel(BaseModel):
         self.backward_G()                   # calculate graidents for G
         self.optimizer_G.step()             # update G's weights
         
-    # def load_model():
-    #     return Pix2PixModel().to(DEVICE)
+
     def state_dict(self):
-        #maybe return them as a tuple
-        # return {'generator': self.netG.state_dict(), 'discriminator': self.netD.state_dict()}
+        
+        #returns the parameters of each individual model
         return (self.netG.state_dict(), self.netD.state_dict())
     
     def load_state_dict(self, gen, disc):
-        #based on the tuple maybe load based on that 
+        #input
+        #gen: the parameters of the generator
+        #disc: parameters of the discriminator
         
-        #try if first doesn;t work
-        #gen, disc = state_dict
-        #self.netG.load_state_dict(gen)
-        #self.netD.load_state_dict(disc)
-        
+        #this loads the parameters of teh discriminator and generator into the model definition
+        #in order to start off with an already trained model
         self.netG.load_state_dict(gen, strict=False)
         self.netD.load_state_dict(disc, strict=False)
         
