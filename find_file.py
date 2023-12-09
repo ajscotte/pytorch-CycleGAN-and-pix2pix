@@ -53,7 +53,7 @@ def find_files(directory, pattern):
     return matching_files
 
 def main():
-    directory = '/path/to/directory'
+    directory = '/home/ajs667/federated_pix2pix_real/pytorch-CycleGAN-and-pix2pix/results/central_nocrop/test_latest/images'
     pattern = '*fake*'
     
     matching_files = find_files(directory, pattern)
