@@ -3,6 +3,7 @@ import fnmatch
 import cv2
 import numpy as np
 import matplotlib.pyplot as plt
+from skimage.metrics import structural_similarity as ssim
 
 # def compare_images(image1_path, image2_path):
 #     # Read images
@@ -18,21 +19,35 @@ import matplotlib.pyplot as plt
 #     mse = np.sum((img1 - img2) ** 2) / float(img1.size)
 
 #     return mse
+# def compare_images(image1_path, image2_path):
+#     # Read images
+#     img1 = cv2.imread(image1_path)
+#     img2 = cv2.imread(image2_path)
+
+#     # Check if the images have the same dimensions
+#     if img1.shape != img2.shape:
+#         print("Images have different dimensions. Cannot compare.")
+#         return
+
+#     # Calculate pixel accuracy
+#     pixel_accuracy = np.sum(img1 == img2) / np.prod(img1.shape)
+
+#     return pixel_accuracy
+
 def compare_images(image1_path, image2_path):
-    # Read images
-    img1 = cv2.imread(image1_path)
-    img2 = cv2.imread(image2_path)
+    # Read images in grayscale
+    img1 = cv2.imread(image1_path, cv2.IMREAD_GRAYSCALE)
+    img2 = cv2.imread(image2_path, cv2.IMREAD_GRAYSCALE)
 
     # Check if the images have the same dimensions
     if img1.shape != img2.shape:
         print("Images have different dimensions. Cannot compare.")
         return
 
-    # Calculate pixel accuracy
-    pixel_accuracy = np.sum(img1 == img2) / np.prod(img1.shape)
+    # Calculate Structural Similarity Index (SSI)
+    similarity_index, _ = ssim(img1, img2, full=True)
 
-    return pixel_accuracy
-
+    return similarity_index
 
 def find_files(directory, pattern):
     matching_files = []
