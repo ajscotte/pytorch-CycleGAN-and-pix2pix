@@ -29,7 +29,7 @@ def find_files(directory, pattern):
 
 def main():
     directory_central = '/home/ajs667/federated_pix2pix_real/pytorch-CycleGAN-and-pix2pix/results/central_nocrop/test_latest/images'
-    directory_fed = '/home/ajs667/federated_pix2pix_real/pytorch-CycleGAN-and-pix2pix/results/A2B_5rounds_nocrop/5/test_latest/images'
+    directory_fed = '/home/ajs667/federated_pix2pix_real/pytorch-CycleGAN-and-pix2pix/results/A2B_5rounds_nocrop/1/test_latest/images'
     pattern = '*fake*'
     
     matching_files = find_files(directory_central, pattern)
