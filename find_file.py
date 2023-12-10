@@ -4,6 +4,20 @@ import cv2
 import numpy as np
 import matplotlib.pyplot as plt
 
+# def compare_images(image1_path, image2_path):
+#     # Read images
+#     img1 = cv2.imread(image1_path)
+#     img2 = cv2.imread(image2_path)
+
+#     # Check if the images have the same dimensions
+#     if img1.shape != img2.shape:
+#         print("Images have different dimensions. Cannot compare.")
+#         return
+
+#     # Calculate Mean Squared Error (MSE)
+#     mse = np.sum((img1 - img2) ** 2) / float(img1.size)
+
+#     return mse
 def compare_images(image1_path, image2_path):
     # Read images
     img1 = cv2.imread(image1_path)
@@ -14,10 +28,10 @@ def compare_images(image1_path, image2_path):
         print("Images have different dimensions. Cannot compare.")
         return
 
-    # Calculate Mean Squared Error (MSE)
-    mse = np.sum((img1 - img2) ** 2) / float(img1.size)
+    # Calculate pixel accuracy
+    pixel_accuracy = np.sum(img1 == img2) / np.prod(img1.shape)
 
-    return mse
+    return pixel_accuracy
 
 
 def find_files(directory, pattern):
